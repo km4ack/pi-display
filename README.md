@@ -49,7 +49,8 @@ display the page (in seconds) for that file.
 # Remove a file from the display
 
 To remove a file from the display, simply delete the line from the links file. Be sure
-not to leave blank lines in the links file.
+not to leave blank lines in the links file. Removing the file from the files directory
+is optional.
 
 # Kiosk Mode
 
