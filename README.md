@@ -15,8 +15,6 @@ git clone https://github.com/km4ack/pi-display.git
 
 # Start the application
 
-To run the application
-
 Use the command below to start the application.
 
 ```
