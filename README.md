@@ -32,6 +32,7 @@ the file into ~/pi-display/files/ Next, add the file name to the links file. The
 contents of the links file are:
 
 ```
+/pota/POTA6.jpg,5
 DYK2.jpg,5
 test.pdf,5
 DYK1.jpg,5
@@ -45,8 +46,9 @@ https://google.com,5
 ```
 
 Each file has to be included on a new line. The line begins with the file name followed
-by a ",". After the "," a number must be added. This number tells the script how long to
-display the page (in seconds) for that file.
+by a ",". After the "," a number must be added. This number tells the script how long (in seconds) to
+display the page for that file. Notice the first line above `/pota/POTA6.jpg,5` You will find a pota 
+subdirectory under files. 
 
 # Remove a file from the display
 
