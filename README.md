@@ -46,7 +46,12 @@ Each file has to be included on a new line. The line begins with the file name f
 by a ",". After the "," a number must be added. This number tells the script how long to
 display the page (in seconds) for that file.
 
-#Kiosk Mode
+# Remove a file from the display
+
+To remove a file from the display, simply delete the line from the links file. Be sure
+not to leave blank lines in the links file.
+
+# Kiosk Mode
 
 If you would like to run the browser in Kiosk mode, open the pi-display script in a text
 editor. Look for this line:
