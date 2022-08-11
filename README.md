@@ -6,14 +6,18 @@ are all supported. The project comes with sample files contained in the files di
 
 # Installation
 
+Run the commands below one at a time on your Pi.
+
 ```
 cd ~
 git clone https://github.com/km4ack/pi-display.git
 ```
 
-# Run the application
+# Start the application
 
 To run the application
+
+Use the command below to start the application.
 
 ```
 ~/pi-display/./pi-display
