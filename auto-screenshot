@@ -1,0 +1,43 @@
+#!/bin/bash
+
+#Script to capture screen shot and start a webserver.
+#The screenshot can then be displayed on another monitor
+#using Pi-Display. Python3 must be installed
+#11AUGUST2022 KM4ACK
+
+#verify python3 is installed
+CHECK=$(which python3)
+if [ -z $CHECK ]; then
+echo "python3 not found on this system"
+echo "but is required for this script"
+exit
+fi
+
+#File name may be changed below to your liking.
+OUTPUT_FILE_NAME=screenshot.png
+
+#########DO NOT EDIT BELOW THIS LINE##################
+OUTPUT_FILE=$HOME/$OUTPUT_FILE_NAME
+EVERY=60
+
+
+cd ~
+/usr/bin/python3 -m http.server 7000 &
+PYTHON_PID=$(ps aux | grep python3 | grep http | awk '{print $2}')
+
+
+FINISH() {
+kill -9 $PYTHON_PID
+rm $OUTPUT_FILE
+}
+
+trap FINISH EXIT
+
+HOST=$(hostname -I)
+echo "Current IP address is $HOST"
+
+
+while true; do
+/usr/bin/scrot -o -d 5 $OUTPUT_FILE
+sleep $EVERY
+done
