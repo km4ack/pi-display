@@ -50,6 +50,9 @@ display the page (in seconds) for that file.
 
 If you would like to run the browser in Kiosk mode, open the pi-display script in a text
 editor. Look for this line:
+
 `KIOSK=OFF`
+
 and change it to
+
 `KIOSK=ON`
