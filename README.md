@@ -44,4 +44,12 @@ https://google.com,5
 
 Each file has to be included on a new line. The line begins with the file name followed
 by a ",". After the "," a number must be added. This number tells the script how long to
-display the page for that file.
+display the page (in seconds) for that file.
+
+#Kiosk Mode
+
+If you would like to run the browser in Kiosk mode, open the pi-display script in a text
+editor. Look for this line:
+`KIOSK=OFF`
+and change it to
+`KIOSK=ON`
