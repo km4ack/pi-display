@@ -1,0 +1,76 @@
+#!/bin/bash
+
+#script to display links, pics, pdf file, etc in a browser
+#km4ack 10AUGUST2022
+
+#get current directory
+MYPATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
+
+#File name for the file that contains the links.
+FILE=$MYPATH/links
+
+#Set kiosk mode ON/OFF. Use capital letters
+KIOSK=OFF
+#Check for GPS weather reports in your Pat Inbox? YES/NO
+WEATHER_CHECK=YES
+
+PATCALL=$(grep mycall $HOME/.config/pat/config.json | head -1 | sed 's/"mycall": "//;s/",//;s/ //g')
+MAILBOX=$HOME/.local/share/pat/mailbox/$PATCALL/in
+
+#create a trap to clean up when the script exits
+FINISH() {
+sudo killall chromium-browser
+}
+
+trap FINISH EXIT
+
+#Set variable according to user defined kiosk mode above
+if [ $KIOSK = 'OFF' ]; then
+BROWSER=/usr/bin/chromium-browser
+else
+BROWSER="/usr/bin/chromium-browser --kiosk"
+fi
+
+#This is the main function
+DISPLAY(){
+#read the file
+while read -r line; do
+
+#parse each line for link and time to display.
+LINK=$(echo $line | awk -F "," '{print $1}')
+PAUSE=$(echo $line | awk -F "," '{print $2}')
+
+#check to see if file name contains "http"
+LINKTEST=$(echo $LINK | grep http)
+if [ -z "$LINKTEST" ]; then
+LINK=$MYPATH/files/$LINK
+fi
+
+#open the link in the browser
+"$BROWSER" $LINK &
+
+#Display the page for a set number of seconds. How long
+#is defined in the links text file.
+sleep $PAUSE
+done < $FILE
+
+#kill the browser to prepare for another loop
+sudo killall chromium-browser
+
+#check for new weather files
+if [ $WEATHER_CHECK = 'YES' ]; then
+    for file in $MAILBOX/*
+    do
+    FORECAST_CHECK=$(cat $file | grep "forecast.weather")
+	if [ -n $$FORECAST_CHECK ]; then
+	cat $file | sed '1,18d' > $MYPATH/files/weather.txt
+	fi
+
+    done
+fi
+}
+
+#This will run the main function in an infinate loop
+while true; do
+DISPLAY
+done
