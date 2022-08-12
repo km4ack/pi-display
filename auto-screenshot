@@ -5,39 +5,88 @@
 #using Pi-Display. Python3 must be installed
 #11AUGUST2022 KM4ACK
 
+######################################################
+#           User adjustable variables                #
+######################################################
+#Take screen shot every X seconds
+EVERY=60
+
+#File name may be changed below to your liking but
+#should include ".png" at the end.
+OUTPUT_FILE_NAME=screenshot.png
+
+######################################################
+#          DO NOT EDIT BELOW THIS LINE               #
+######################################################
+OUTPUT_DIR=/run/user/$UID/temp_web_server
+OUTPUT_FILE=$OUTPUT_DIR/$OUTPUT_FILE_NAME
+
+mkdir -p $OUTPUT_DIR
+
 #verify python3 is installed
 CHECK=$(which python3)
 if [ -z $CHECK ]; then
 echo "python3 not found on this system"
-echo "but is required for this script"
+echo "but is required for this script."
+echo;echo "To install run:"
+echo "sudo apt update && sudo apt install -y python3.7"
 exit
 fi
 
-#File name may be changed below to your liking.
-OUTPUT_FILE_NAME=screenshot.png
+HEADER(){
+cat <<EOF
+   ####################################
+   #    Auto Screenshot by KM4ACK     #
+   ####################################
+EOF
+}
 
-#########DO NOT EDIT BELOW THIS LINE##################
-OUTPUT_FILE=$HOME/$OUTPUT_FILE_NAME
-EVERY=60
+#notify user of IP address(es).
+CURRENT_IP=$(hostname -I)
+FIRST_IP=$(echo $CURRENT_IP | awk '{print $1}')
+SECOND_IP=$(echo $CURRENT_IP | awk '{print $2}')
+clear;echo;echo
+HEADER;echo
+echo "Use http://$FIRST_IP:7000/$OUTPUT_FILE_NAME"
+if [ -n $SECOND_IP ]; then
+echo "or"
+echo "http://$SECOND_IP:7000/$OUTPUT_FILE_NAME"
+fi
+echo "to access the screenshot."
+echo;echo "Screenshots will begin in 5 seconds"
+echo "and update every $EVERY seconds"
+echo; echo "Press ctrl+c to exit the script"
+echo; echo "Starting in "
 
+#countdown timer
+for i in {5..01}
+do
+tput cup 16 12
+echo -n "$i"
+sleep 1
+done
+echo;echo
 
-cd ~
+#Move to output dir and start server
+cd $OUTPUT_DIR
 /usr/bin/python3 -m http.server 7000 &
 PYTHON_PID=$(ps aux | grep python3 | grep http | awk '{print $2}')
 
-
+#create trap to cleanup on exit
 FINISH() {
+echo; echo "Shutting down http server"
 kill -9 $PYTHON_PID
-rm $OUTPUT_FILE
+sleep 1
+echo "Removing temp directory"
+rm -rf $OUTPUT_DIR
+echo "Done"
+echo "73, de KM4ACK"
 }
 
 trap FINISH EXIT
 
-HOST=$(hostname -I)
-echo "Current IP address is $HOST"
-
-
+#Run in continuous loop
 while true; do
-/usr/bin/scrot -o -d 5 $OUTPUT_FILE
+/usr/bin/scrot -d 5 $OUTPUT_FILE
 sleep $EVERY
 done
