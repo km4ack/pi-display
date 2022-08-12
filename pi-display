@@ -19,6 +19,7 @@ MAILBOX=$HOME/.local/share/pat/mailbox/$PATCALL/in
 
 #create a trap to clean up when the script exits
 FINISH() {
+echo;echo "Exiting...."
 sudo killall chromium-browser
 }
 
@@ -30,6 +31,8 @@ BROWSER=/usr/bin/chromium-browser
 else
 BROWSER="/usr/bin/chromium-browser --kiosk"
 fi
+
+echo "Starting the display"
 
 #This is the main function
 DISPLAY(){
@@ -47,7 +50,7 @@ LINK=$MYPATH/files/$LINK
 fi
 
 #open the link in the browser
-"$BROWSER" $LINK &
+"$BROWSER" $LINK > /dev/null 2>&1 &
 
 #Display the page for a set number of seconds. How long
 #is defined in the links text file.
