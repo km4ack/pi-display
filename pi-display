@@ -14,6 +14,18 @@ KIOSK=OFF
 #Check for GPS weather reports in your Pat Inbox? YES/NO
 WEATHER_CHECK=YES
 
+HEADER(){
+clear;echo;echo
+cat <<EOF
+##############################
+#      KM4ACK Pi-Display     #
+##############################
+
+EOF
+echo "Slideshow loop = $X"
+echo;echo "Press ctrl+c to exit the slideshow"
+}
+
 PATCALL=$(grep mycall $HOME/.config/pat/config.json | head -1 | sed 's/"mycall": "//;s/",//;s/ //g')
 MAILBOX=$HOME/.local/share/pat/mailbox/$PATCALL/in
 
@@ -32,10 +44,21 @@ else
 BROWSER="/usr/bin/chromium-browser --kiosk"
 fi
 
-echo "Starting the display"
+clear;echo
+echo "Starting the display in "
+echo;echo "Press ctrl+c to exit"
+#countdown timer
+for i in {3..01}
+do
+tput cup 1 24
+echo -n "$i"
+sleep 1
+done
+X=1
 
 #This is the main function
 DISPLAY(){
+HEADER
 #read the file
 while read -r line; do
 
@@ -56,6 +79,8 @@ fi
 #is defined in the links text file.
 sleep $PAUSE
 done < $FILE
+X=$((X+1))
+
 
 #kill the browser to prepare for another loop
 sudo killall chromium-browser
