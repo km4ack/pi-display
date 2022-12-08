@@ -26,11 +26,11 @@ mkdir -p $OUTPUT_DIR
 #verify python3 is installed
 CHECK=$(which python3)
 if [ -z $CHECK ]; then
-echo "python3 not found on this system"
-echo "but is required for this script."
-echo;echo "To install run:"
-echo "sudo apt update && sudo apt install -y python3.7"
-exit
+	echo "python3 not found on this system"
+	echo "but is required for this script."
+	echo;echo "To install run:"
+	echo "sudo apt update && sudo apt install -y python3.7"
+	exit
 fi
 
 HEADER(){
@@ -49,8 +49,8 @@ clear;echo;echo
 HEADER;echo
 echo "Use http://$FIRST_IP:7000/$OUTPUT_FILE_NAME"
 if [ -n $SECOND_IP ]; then
-echo "or"
-echo "http://$SECOND_IP:7000/$OUTPUT_FILE_NAME"
+	echo "or"
+	echo "http://$SECOND_IP:7000/$OUTPUT_FILE_NAME"
 fi
 echo "to access the screenshot."
 echo;echo "Screenshots will begin in 5 seconds"
@@ -61,9 +61,9 @@ echo; echo "Starting in "
 #countdown timer
 for i in {5..01}
 do
-tput cup 16 12
-echo -n "$i"
-sleep 1
+	tput cup 16 12
+	echo -n "$i"
+	sleep 1
 done
 echo;echo
 
@@ -87,6 +87,9 @@ trap FINISH EXIT
 
 #Run in continuous loop
 while true; do
-/usr/bin/scrot -d 5 $OUTPUT_FILE
-sleep $EVERY
+	if [ -f "$OUTPUT_FILE" ]; then
+		rm $OUTPUT_FILE
+	fi
+	/usr/bin/scrot -d 5 $OUTPUT_FILE
+	sleep $EVERY
 done
