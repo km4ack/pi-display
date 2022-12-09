@@ -6,11 +6,10 @@ are all supported. The project comes with sample files contained in the files di
 
 # Installation
 
-Run the commands below one at a time on your Pi.
+Run the command below to install on your Debian system.
 
 ```
-cd ~
-git clone https://github.com/km4ack/pi-display.git
+git clone https://github.com/km4ack/pi-display.git $HOME/pi-display
 ```
 
 # Start the application
@@ -55,6 +54,22 @@ subdirectory under files.
 To remove a file from the display, simply delete the line from the links file. Be sure
 not to leave blank lines in the links file. Removing the file from the files directory
 is optional.
+
+# Weather-report
+
+This script will help you generate a weather report and output the results as a HTML file
+that is copied to the pi-display files for display. To run the script, use the following command
+
+```
+~/pi-display/./weather-report
+```
+
+# auto-screenshot
+
+This script is included but designed to be run on another computer. Once copied to the other machine
+and started, it will create a web server and capture screenshot at the interval set (60 second default) in the script.
+This screenshot can then be pulled into the pi-display. I use it to screen shot an APRS digipeater map
+than can then be viewed on the pi-display machine.
 
 # Kiosk Mode
 
