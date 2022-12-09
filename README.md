@@ -66,10 +66,10 @@ that is copied to the pi-display files for display. To run the script, use the f
 
 # auto-screenshot
 
-This script is included but designed to be run on another computer. Once copied to the other machine
+This script is included but designed to be run on another computer in conjunction with pi-display. Once copied to the other machine
 and started, it will create a web server and capture screenshot at the interval set (60 second default) in the script.
 This screenshot can then be pulled into the pi-display. I use it to screen shot an APRS digipeater map
-than can then be viewed on the pi-display machine.
+than can then be viewed on the pi-display machine. Note:python3 is required for this script to work.
 
 # Kiosk Mode
 
