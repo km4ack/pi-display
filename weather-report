@@ -1,0 +1,106 @@
+#!/bin/bash
+
+#script asks for weather forecast and generates html file
+#The html file is moved to the pi-display directory for disply"
+#09DEC2022
+
+my_dir="$(cd "$(dirname "$0")" && pwd)"
+icons="![](file://${my_dir}/weather-icons/"
+outfile=/run/user/$UID/weather.txt
+html=/run/user/$UID/weather.html
+pi_display=$HOME/pi-display/files/
+
+#verify we have icons to work with
+if [ ! -d $my_dir/weather-icons ]; then
+	echo "Weather icons not found."
+	exit 1
+fi
+
+HEADER(){
+	clear;echo;echo
+	echo " ############################"
+	echo " # Weather Report Generator #"
+	echo " ############################"
+	echo 
+}
+
+IMAGE(){
+	HEADER
+	echo " cloudy, part-sun, rain, snow, sunny, thunder"
+	read -p " $img weather image to use ? " image
+
+	case $image in
+		cloudy)
+			image=cloudy.jpg
+		;;
+		part-sun)
+			image=part-sun.jpg
+		;;
+		rain)
+			image=rain.jpg
+		;;
+		snow)
+			image=snow.jpg
+		;;
+		sunny)
+			image=sunny.jpg
+		;;
+		thunder)
+			image=thunder.jpg
+		;;
+		*)
+			echo;HEADER;echo " not a valid choice. Please choose"
+			echo " cloudy, part-sun, rain, snow, sunny or thunder"
+			sleep 3
+			IMAGE
+		;;
+	esac
+}
+
+#main menu
+HEADER
+read -p " What is the current temperture? " temp
+#send user to image function to get weather image to use
+img=Current
+IMAGE
+CUR_IMG=$image
+read -p " Forcast for today? " day_forecast
+#send user to image function to get weather image to use
+img=Tonight
+IMAGE
+NIGHT_IMG=$image
+read -p " Forcast for tonight? " night_forecast
+#send user to image function to get weather image to use
+img=Tomorrow
+IMAGE
+TOM_IMG=$image
+read -p " Forcast for tomorrow? " tom_forecast
+
+#output data to temp file
+HEADER
+echo "# Currently $temp" > $outfile
+echo "${icons}${CUR_IMG})" >> $outfile
+echo >> $outfile
+echo "### $day_forecast" >> $outfile
+echo "# Tonight" >> $outfile
+echo "${icons}${NIGHT_IMG})" >> $outfile
+echo >> $outfile
+echo "### $night_forecast" >> $outfile
+echo "# Tomorrow">> $outfile
+echo "${icons}${TOM_IMG})" >> $outfile
+echo >> $outfile
+echo "### $tom_forecast" >> $outfile
+echo >> $outfile
+echo "### Last update `date`" >> $outfile
+
+HEADER
+echo "Generating HTML file"
+cat $outfile | pandoc -s -o $html >/dev/null 2>&1
+sed -i "s/title>-/title>Weather-`date`/" $html
+rm $outfile
+echo "moving html file to pi-display directory"
+mv $html $pi_display
+
+if ! grep weather.html $HOME/pi-display/links; then
+	echo "weather.html,15" >> $HOME/pi-display/links
+fi
