@@ -21,7 +21,7 @@ Use the command below to start the application.
 ```
 
 The script will run in a loop. After all of the files are displayed, chromium closes,
-reopens, and displays the files again. To exit the script, use `ctrl+x` in the terminal
+reopens, and displays the files again. To exit the script, use `ctrl+c` in the terminal
 window where you stated the script.
 
 # Add files to display
