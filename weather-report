@@ -10,6 +10,15 @@ outfile=/run/user/$UID/weather.txt
 html=/run/user/$UID/weather.html
 pi_display=$HOME/pi-display/files/
 
+#verify pandoc is installed
+if ! hash pandoc 2>/dev/null; then
+	echo "pandoc not found"
+	echo "installing"
+	sleep 2
+	sudo apt-update
+	sudo apt install -y pandoc
+fi
+
 #verify we have icons to work with
 if [ ! -d $my_dir/weather-icons ]; then
 	echo "Weather icons not found."
