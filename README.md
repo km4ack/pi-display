@@ -64,6 +64,15 @@ that is copied to the pi-display files for display. To run the script, use the f
 ~/pi-display/./weather-report
 ```
 
+# Markdown
+
+This script will help you generate a quick web page using the markdown language. It also saves your work to ~/pi-display/tmp/ so that you
+can edit the file(s) in the future with this script. If you aren't familiar with the simplicity of markdown, checkout [this page](https://www.markdownguide.org/cheat-sheet)
+To run, use the following command
+
+```
+~/pi-display/./markdown
+```
 # auto-screenshot
 
 This script is included but designed to be run on another computer in conjunction with pi-display. Once copied to the other machine
