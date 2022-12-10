@@ -26,27 +26,38 @@ HEADER(){
 
 IMAGE(){
 	HEADER
-	echo " cloudy, part-sun, rain, snow, sunny, thunder"
+	echo " (c)loudy, (p)artly-cloudy, (r)ain, (s)now, (cl)ear, (t)hunder-storms"
 	read -p " $img weather image to use ? " image
 
 	case $image in
-		cloudy)
+		c)
 			image=cloudy.jpg
 		;;
-		part-sun)
-			image=part-sun.jpg
+		p)
+			if [ "$img" = 'Tonight' ]; then
+				image=cloudy-night.jpg
+			else
+				image=part-sun.jpg
+			fi
 		;;
-		rain)
+		r)
 			image=rain.jpg
 		;;
-		snow)
+		s)
 			image=snow.jpg
 		;;
-		sunny)
-			image=sunny.jpg
+		cl)
+			if [ "$img" = 'Tonight' ]; then
+				image=moon.jpg
+			else
+				image=sunny.jpg
+			fi
 		;;
-		thunder)
+		t)
 			image=thunder.jpg
+		;;
+		sk)
+			image=
 		;;
 		*)
 			echo;HEADER;echo " not a valid choice. Please choose"
