@@ -7,6 +7,15 @@
 tmp_dir=$HOME/pi-display/tmp
 mkdir -p $tmp_dir
 
+#verify pandoc is installed
+if ! hash pandoc 2>/dev/null; then
+	echo "pandoc not found"
+	echo "installing"
+	sleep 2
+	sudo apt-update
+	sudo apt install -y pandoc
+fi
+
 HEADER(){
 clear;echo;echo
 echo "######################"
