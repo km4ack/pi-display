@@ -1,0 +1,39 @@
+#!/bin/bash
+
+HEADER(){
+clear;echo;echo
+echo "############################"
+echo "# Pi-Display File Importer #"
+echo "############################"
+}
+if [ -z "$1" ]; then
+	echo "no import directory specified. usage is"
+	echo "import /path/to/import/dir"
+	exit 1
+fi
+
+import_dir=$1
+export=$HOME/pi-display/files
+
+HEADER
+echo "Files from $import_dir will be imported"
+echo "If this is wrong, press ctrl+c to stop and exit"
+echo
+echo "The time a file is displayed can be adjusted after"
+echo "import in the $HOME/pi-display/links file"
+read -p "How many seconds to display each file? " sec
+HEADER
+echo "File will be imported into a subdirectory"
+echo "of $export"
+read -p "Please give the sub directory a name? " dir
+dir=$(echo $dir | sed 's/ /-/g')
+mkdir -p $HOME/pi-display/files/$dir
+HEADER
+
+for file in $import_dir/*; do
+	mv $file ${export}/${dir}
+	filename=$(echo $file | awk -F "/" '{print $NF}')
+	echo "importing $filename to display for $sec seconds"
+	echo "/${dir}/${filename},${sec}" >> $HOME/pi-display/links
+done
+echo "Import complete. Files added to slideshow."
