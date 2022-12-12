@@ -83,6 +83,18 @@ and started, it will create a web server and capture screenshot at the interval 
 This screenshot can then be pulled into the pi-display. I use it to screen shot an APRS digipeater map
 than can then be viewed on the pi-display machine. Note:python3 is required for this script to work.
 
+# Import
+
+An import script is included for importing multiple files as once and automatically adding them
+to the slideshow. This is especially helpful when importing many images. An import directory must be specified
+as the first argument. Example:
+
+```
+./import /path/to/import/
+```
+The time set to display each slide is applied to all of the
+imported files but can be modified after the import in the ~/pi-display/links file.
+
 # Kiosk Mode
 
 If you would like to run the browser in Kiosk mode, open the pi-display script in a text
