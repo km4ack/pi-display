@@ -15,6 +15,14 @@ fi
 import_dir=$1
 export=$HOME/pi-display/files
 
+ck=$(ls $import_dir) 
+if [ -z "$ck" ]; then
+	echo ":::: CRITICAL ERROR! ::::"
+	echo "Directory selected for import seems to be"
+	echo "empty or not found. Can't continue"
+	exit 1
+fi
+
 HEADER
 echo "Files from $import_dir will be imported"
 echo "If this is wrong, press ctrl+c to stop and exit"
