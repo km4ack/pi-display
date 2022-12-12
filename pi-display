@@ -3,6 +3,8 @@
 #script to display links, pics, pdf file, etc in a browser
 #km4ack 10AUGUST2022
 
+version=1
+
 #get current directory
 MYPATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
 
@@ -12,7 +14,7 @@ FILE=$MYPATH/links
 #Set kiosk mode ON/OFF. Use capital letters
 KIOSK=OFF
 #Check for GPS weather reports in your Pat Inbox? YES/NO
-WEATHER_CHECK=YES
+WEATHER_CHECK=NO
 
 HEADER(){
 clear;echo;echo
