@@ -95,6 +95,28 @@ as the first argument. Example:
 The time set to display each slide is applied to all of the
 imported files but can be modified after the import in the ~/pi-display/links file.
 
+# Ideas for things to run on the Pi Display
+
+- Did you Know series (included with Pi Display)
+- Solar Forecast
+- Weather Forecast
+- Weather Warnings
+- Propagation Prediction Images (VOACAP)
+- FLMSG HTML Pages
+- Images of the Day
+- APRS Map (pulled from digipeater)
+- Announcements (next club meeting, meet ups, etc)
+- FD/WFD Schedule
+- POTA Slides (included with Pi Display)
+- Station Capabilities
+- Local Repeater Info
+- Club Simplex Frequency 
+- Info to support event
+-- Number of riders/runners to finish
+-- Location of lead rider/runner
+-- Location of last rider/runner
+-- Net Control Frequency
+
 # Kiosk Mode
 
 If you would like to run the browser in Kiosk mode, open the pi-display script in a text
