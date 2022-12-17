@@ -1,0 +1,69 @@
+#!/bin/bash
+
+#spin up a simple webserver so users can connect and download files.
+#this relies on python3 being installed.
+#17DEC2022 KM4ACK
+
+#Directory for server to display. Typically this is the files directory but
+#it is also possible to limit visitors to a specefic sub directory.
+#ie $HOME/pi-display/files/sub-directory
+
+DIR=$HOME/pi-display/files
+ADDR=$(hostname -I)
+IP1=$(echo $ADDR | awk '{print $1}')
+IP2=$(echo $ADDR | awk '{print $2}')
+TMP=/run/user/$UID/server.tmp
+HTML=$HOME/pi-display/files/server-instructions.html
+clear;echo;echo
+echo "IP address of server is"
+echo "${IP1}:7000"
+if [ -n "$IP2" ]; then
+	echo "or"
+	echo "${IP2}:7000"
+fi
+echo
+echo "starting web server"
+cd $DIR
+/usr/bin/screen -S web-server -d -m python3 -m http.server 7000
+echo "Server started with screen. To stop the server, run"
+echo "screen -r web-server"
+echo "followed with ctrl+c"
+echo
+read -p "Would you like to add instructions to the display? y/n " ans
+
+if [ "$ans" = 'y' ] || [ "$ans" = 'Y' ]; then
+	read -p "What is the WiFi SSID? " SSID
+	read -p "What is the WiFi password? " PWD
+	echo "Generating html file for display"
+	cat > $TMP <<EOF
+<center>
+<br/>
+<span style="color:red;font-weight:700;font-size:100px"> Web Server Instructions</span>
+<br/>
+<span style="color:black;font-weight:700;font-size:60px"> Use WiFi on your device and connect to</span>
+<br/>
+<span style="color:black;font-weight:700;font-size:60px"> SSID = $SSID</span>
+<br/>
+<span style="color:black;font-weight:700;font-size:60px"> Password = $PWD</span>
+<br/>
+<span style="color:black;font-weight:700;font-size:60px"> Then open the browser and navigate to</span>
+<br/>
+<span style="color:black;font-weight:700;font-size:60px"> ${IP1}:7000 </span>
+<br/>
+<span style="color:black;font-weight:700;font-size:60px"> or ${IP2}:7000 </span>
+</center>
+EOF
+
+	cat $TMP | pandoc -s -o $HTML >/dev/null 2>&1
+	read -p "How many seconds should the page be displayed? " sec
+	#remove file from links if exist
+	if grep server-instructions $HOME/pi-display/links; then
+			sed -i "/server-instructions/d" $HOME/pi-display/links
+	fi
+	echo "server-instructions.html,${sec}" >> $HOME/pi-display/links
+	echo "The page will now display for $sec seconds"
+	echo "This can be changed in $HOME/pi-display/links"
+
+else
+	exit 0
+fi
