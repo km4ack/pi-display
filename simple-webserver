@@ -49,10 +49,15 @@ if [ "$ans" = 'y' ] || [ "$ans" = 'Y' ]; then
 <span style="color:black;font-weight:700;font-size:60px"> Then open the browser and navigate to</span>
 <br/>
 <span style="color:black;font-weight:700;font-size:60px"> ${IP1}:7000 </span>
-<br/>
-<span style="color:black;font-weight:700;font-size:60px"> or ${IP2}:7000 </span>
-</center>
 EOF
+
+if [ -n ${IP2} ]; then
+	echo"<br/>" >> $TMP
+	echo "<span style="color:black;font-weight:700;font-size:60px"> or ${IP2}:7000 </span>" >> $TMP
+	echo "</center>" >> $TMP
+else
+	echo "</center>" >> $TMP
+fi
 
 	cat $TMP | pandoc -s -o $HTML >/dev/null 2>&1
 	read -p "How many seconds should the page be displayed? " sec
