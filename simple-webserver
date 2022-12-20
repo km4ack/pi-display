@@ -53,7 +53,7 @@ EOF
 
 if [ -n ${IP2} ]; then
 	echo"<br/>" >> $TMP
-	echo "<span style="color:black;font-weight:700;font-size:60px"> or ${IP2}:7000 </span>" >> $TMP
+	echo "<span style=\"color:black;font-weight:700;font-size:60px\"> or ${IP2}:7000 </span>" >> $TMP
 	echo "</center>" >> $TMP
 else
 	echo "</center>" >> $TMP
