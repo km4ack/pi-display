@@ -5,6 +5,9 @@ It will rotate through the links/files that you provide. HTML, PDF, JPG, PNG, PD
 are all supported. The project comes with sample files contained in the files directory.
 
 # Video
+
+[![IMAGE ALT TEXT](http://img.youtube.com/vi/BB6ZqO5Vkyg/0.jpg)](https://www.youtube.com/watch?v=BB6ZqO5Vkyg "Pi Display Overview")
+
 [![IMAGE ALT TEXT](http://img.youtube.com/vi/5O3nXKQn51A/0.jpg)](https://www.youtube.com/watch?v=5O3nXKQn51A "Pi Display Install & Overview")
 
 # Installation
